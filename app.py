@@ -26,8 +26,8 @@ if os.path.exists("chula_knowledge.txt"):
     with open("chula_knowledge.txt", "r", encoding="utf-8") as f:
         local_knowledge += f.read()
 
-# เปลี่ยนมาใช้รุ่น gemini-2.5-flash
-model = genai.GenerativeModel("gemini-2.5-flash")
+# เปลี่ยนมาใช้รุ่น gemini-3.8-flash ตามคำแนะนำของระบบ
+model = genai.GenerativeModel("gemini-3.8-flash")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
