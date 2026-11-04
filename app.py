@@ -16,7 +16,7 @@ if not api_key:
 
 genai.configure(api_key=api_key)
 
-# อ่านไฟล์ข้อมูล local จากโฟลเดอร์ docs หรือไฟล์ chula_knowledge.txt
+# อ่านไฟล์ข้อมูล local
 local_knowledge = ""
 if os.path.exists("docs/loy_krathong.md"):
     with open("docs/loy_krathong.md", "r", encoding="utf-8") as f:
@@ -26,8 +26,8 @@ if os.path.exists("chula_knowledge.txt"):
     with open("chula_knowledge.txt", "r", encoding="utf-8") as f:
         local_knowledge += f.read()
 
-# เปลี่ยนมาใช้รุ่น gemini-3.8-flash ตามคำแนะนำของระบบ
-model = genai.GenerativeModel("gemini-1.5-flash")
+# ใช้โมเดลมาตรฐาน gemini-2.5-flash
+model = genai.GenerativeModel("gemini-2.5-flash")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
