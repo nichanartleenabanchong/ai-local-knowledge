@@ -1,2 +1,2 @@
 streamlit
-huggingface_hub
+duckduckgo_search
