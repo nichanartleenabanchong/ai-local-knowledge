@@ -1,11 +1,20 @@
 import streamlit as st
 import os
-from duckduckgo_search import DDGS
+from groq import Groq
 
 st.set_page_config(page_title="Thai Festivals AI", page_icon="🪔")
 
-st.title("🪔 Thai Festivals AI Assistant (Local/Open-Source LLM)")
-st.caption("Local RAG implementation using an open-source LLM (Llama 3.3).")
+st.title("🪔 Thai Festivals AI Assistant (Open-Source LLM)")
+st.caption("Local RAG implementation using Meta's open-source Llama 3.3 model.")
+
+# Fetch Groq API Key
+api_key = st.secrets.get("GROQ_API_KEY") or os.environ.get("GROQ_API_KEY")
+
+if not api_key:
+    st.error("Missing GROQ_API_KEY in Streamlit Secrets. Please check your app settings.")
+    st.stop()
+
+client = Groq(api_key=api_key)
 
 # Load local knowledge documents
 local_knowledge = ""
@@ -42,13 +51,15 @@ if prompt := st.chat_input("Ask about Songkran, Loy Krathong, dates, rituals..."
     """
 
     with st.chat_message("assistant"):
-        with st.spinner("Open-Source LLM thinking..."):
+        with st.spinner("Llama 3.3 thinking..."):
             try:
-                # Query open-source model (Llama 3.3) without needing any API keys
-                with DDGS() as ddgs:
-                    response = ddgs.chat(grounded_prompt, model="llama-3.3-70b")
-                
-                st.markdown(response)
-                st.session_state.messages.append({"role": "assistant", "content": response})
+                response = client.chat.completions.create(
+                    model="llama-3.3-70b-versatile",
+                    messages=[{"role": "user", "content": grounded_prompt}],
+                    temperature=0.3,
+                )
+                answer = response.choices[0].message.content
+                st.markdown(answer)
+                st.session_state.messages.append({"role": "assistant", "content": answer})
             except Exception as e:
                 st.error(f"Error generating response: {e}")
