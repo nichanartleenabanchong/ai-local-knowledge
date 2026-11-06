@@ -1,22 +1,13 @@
 import streamlit as st
-import google.generativeai as genai
+import ollama
 import os
 
 st.set_page_config(page_title="Thai Festivals AI", page_icon="🪔")
 
-st.title("🪔 Thai Festivals AI Assistant")
-st.caption("Does giving an AI local documents make it more accurate? Songkran, Loy Krathong and more.")
+st.title("🪔 Thai Festivals AI Assistant (Local LLM)")
+st.caption("Does giving a local LLM local documents make it more accurate? Songkran, Loy Krathong, and more.")
 
-# ดึง Gemini API Key จาก Streamlit Secrets
-api_key = st.secrets.get("GEMINI_API_KEY") or os.environ.get("GEMINI_API_KEY")
-
-if not api_key:
-    st.error("Missing GEMINI_API_KEY in Streamlit Secrets. Please check your settings.")
-    st.stop()
-
-genai.configure(api_key=api_key)
-
-# อ่านไฟล์ข้อมูล local
+# Load local knowledge documents
 local_knowledge = ""
 if os.path.exists("docs/loy_krathong.md"):
     with open("docs/loy_krathong.md", "r", encoding="utf-8") as f:
@@ -26,9 +17,6 @@ if os.path.exists("chula_knowledge.txt"):
     with open("chula_knowledge.txt", "r", encoding="utf-8") as f:
         local_knowledge += f.read()
 
-# ใช้โมเดลมาตรฐาน gemini-2.5-flash
-model = genai.GenerativeModel("gemini-3.8-flash")
-
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
@@ -36,7 +24,7 @@ for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-if prompt := st.chat_input("Ask about Songkran, Loy Krathong, dates, rituals, regional differences..."):
+if prompt := st.chat_input("Ask about Songkran, Loy Krathong, dates, rituals..."):
     st.session_state.messages.append({"role": "user", "content": prompt})
     with st.chat_message("user"):
         st.markdown(prompt)
@@ -54,11 +42,12 @@ if prompt := st.chat_input("Ask about Songkran, Loy Krathong, dates, rituals, re
     """
 
     with st.chat_message("assistant"):
-        with st.spinner("Thinking..."):
+        with st.spinner("Local LLM thinking..."):
             try:
-                response = model.generate_content(grounded_prompt)
-                answer = response.text
+                # Call local LLM (e.g., Llama 3.2 or Mistral via Ollama)
+                response = ollama.generate(model="llama3.2", prompt=grounded_prompt)
+                answer = response["response"]
                 st.markdown(answer)
                 st.session_state.messages.append({"role": "assistant", "content": answer})
             except Exception as e:
-                st.error(f"Error generating response: {e}")
+                st.error(f"Error calling Local LLM: {e}")
