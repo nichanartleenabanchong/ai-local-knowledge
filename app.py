@@ -1,11 +1,14 @@
 import streamlit as st
-import ollama
 import os
+from huggingface_hub import InferenceClient
 
 st.set_page_config(page_title="Thai Festivals AI", page_icon="🪔")
 
-st.title("🪔 Thai Festivals AI Assistant (Local LLM)")
-st.caption("Does giving a local LLM local documents make it more accurate? Songkran, Loy Krathong, and more.")
+st.title("🪔 Thai Festivals AI Assistant (Local/Open-Source LLM)")
+st.caption("Local RAG implementation using an open-source LLM (Qwen2.5-7B-Instruct).")
+
+# Initialize Hugging Face open-source inference client
+client = InferenceClient("Qwen/Qwen2.5-7B-Instruct")
 
 # Load local knowledge documents
 local_knowledge = ""
@@ -44,10 +47,13 @@ if prompt := st.chat_input("Ask about Songkran, Loy Krathong, dates, rituals..."
     with st.chat_message("assistant"):
         with st.spinner("Local LLM thinking..."):
             try:
-                # Call local LLM (e.g., Llama 3.2 or Mistral via Ollama)
-                response = ollama.generate(model="llama3.2", prompt=grounded_prompt)
-                answer = response["response"]
-                st.markdown(answer)
-                st.session_state.messages.append({"role": "assistant", "content": answer})
+                # Query open-source local LLM
+                response = client.text_generation(
+                    grounded_prompt,
+                    max_new_tokens=512,
+                    temperature=0.3
+                )
+                st.markdown(response)
+                st.session_state.messages.append({"role": "assistant", "content": response})
             except Exception as e:
-                st.error(f"Error calling Local LLM: {e}")
+                st.error(f"Error generating response: {e}")
