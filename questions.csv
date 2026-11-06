@@ -1,0 +1,24 @@
+id,category,question,expected_answer
+1,dates,What are the official dates of Songkran?,13-15 April
+2,history,What does the word Songkran mean and where does it come from?,From Sanskrit "sankranti" = movement of the sun into a new zodiac sign (Aries)
+3,history,Who are the Nang Songkran in the Songkran legend?,The seven daughters of Kabil Maha Phrom who carry his head each year
+4,history,When did UNESCO list Songkran as Intangible Cultural Heritage?,December 2023
+5,rituals,What is rot nam dam hua?,Pouring scented water on the hands of elders to show respect and ask for blessings
+6,rituals,Why do people carry sand to the temple during Songkran?,To build sand chedis and return the sand carried away on their feet during the year
+7,regional,What is Songkran called in Northern Thailand and what is Wan Pak Pi?,Pi Mai Mueang; Wan Pak Pi = 16 April for paying respect to guardian spirits and elders
+8,regional,What is special about Songkran in Phra Pradaeng?,Mon-style Songkran held about a week after 13 April
+9,regional,What is Wan Lai in Pattaya?,Local water festival a few days after Songkran around 18-19 April
+10,dates,When is Loy Krathong held?,Full moon night of the 12th Thai lunar month (usually November)
+11,history,Why do people float krathong?,To thank/apologize to the water goddess Phra Mae Khongkha and let go of bad luck
+12,history,Is the story of Nang Noppamas historically accurate?,Many historians think it was written later in the early Rattanakosin period so may not be accurate
+13,rituals,What is a traditional krathong made of?,Banana trunk + banana leaves + flowers + 3 incense sticks + candle
+14,regional,What is Loy Krathong Sai and where is it held?,Tak province; coconut-shell krathong floated in lines on the Ping River
+15,regional,What does Yi Peng mean?,Full moon of the 2nd month in the Lanna calendar
+16,regional,Why are Yi Peng and Loy Krathong on the same night?,The Lanna calendar is about two months ahead so Lanna month 2 = central Thai month 12
+17,rituals,What is the difference between khom loi and khom fai?,Khom loi = sky lantern released into the sky; khom fai = hanging lantern for decoration
+18,history,Why do people launch rockets in Bun Bang Fai?,To ask the rain god Phaya Thaen to send rain before rice planting
+19,dates,How is the date of Phi Ta Khon chosen?,No fixed date; chosen each year by the spirit medium Chao Pho Kuan (usually June-July)
+20,history,What story is Phi Ta Khon based on?,The Vessantara Jataka; spirits followed Prince Vessantara back to the city
+21,rituals,ประเพณีสงกรานต์มีการก่อเจดีย์ทรายเพื่ออะไร,เพื่อคืนทรายให้วัดที่ติดเท้าออกไปตลอดปี
+22,dates,ลอยกระทงจัดขึ้นวันไหน,วันเพ็ญเดือน 12 ตามปฏิทินจันทรคติ (ส่วนใหญ่เดือนพฤศจิกายน)
+23,out_of_scope,What is the Phuket Vegetarian Festival?,Not in documents -> RAG should say it does not know
