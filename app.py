@@ -1,14 +1,11 @@
 import streamlit as st
 import os
-from huggingface_hub import InferenceClient
+from duckduckgo_search import DDGS
 
 st.set_page_config(page_title="Thai Festivals AI", page_icon="🪔")
 
 st.title("🪔 Thai Festivals AI Assistant (Local/Open-Source LLM)")
-st.caption("Local RAG implementation using an open-source LLM (Qwen2.5-7B-Instruct).")
-
-# Initialize Hugging Face open-source inference client
-client = InferenceClient("Qwen/Qwen2.5-7B-Instruct")
+st.caption("Local RAG implementation using an open-source LLM (Llama 3.3).")
 
 # Load local knowledge documents
 local_knowledge = ""
@@ -45,14 +42,12 @@ if prompt := st.chat_input("Ask about Songkran, Loy Krathong, dates, rituals..."
     """
 
     with st.chat_message("assistant"):
-        with st.spinner("Local LLM thinking..."):
+        with st.spinner("Open-Source LLM thinking..."):
             try:
-                # Query open-source local LLM
-                response = client.text_generation(
-                    grounded_prompt,
-                    max_new_tokens=512,
-                    temperature=0.3
-                )
+                # Query open-source model (Llama 3.3) without needing any API keys
+                with DDGS() as ddgs:
+                    response = ddgs.chat(grounded_prompt, model="llama-3.3-70b")
+                
                 st.markdown(response)
                 st.session_state.messages.append({"role": "assistant", "content": response})
             except Exception as e:
