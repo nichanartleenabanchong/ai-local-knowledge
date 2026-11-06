@@ -5,7 +5,7 @@ from groq import Groq
 st.set_page_config(page_title="Thai Festivals AI", page_icon="🪔")
 
 st.title("🪔 Thai Festivals AI Assistant (Open-Source LLM)")
-st.caption("Local RAG implementation using Meta's open-source Llama 3.3 model.")
+st.caption("Local RAG implementation using Meta's open-source Llama model via Groq.")
 
 # Fetch Groq API Key
 api_key = st.secrets.get("GROQ_API_KEY") or os.environ.get("GROQ_API_KEY")
@@ -51,10 +51,10 @@ if prompt := st.chat_input("Ask about Songkran, Loy Krathong, dates, rituals..."
     """
 
     with st.chat_message("assistant"):
-        with st.spinner("Llama 3.3 thinking..."):
+        with st.spinner("Llama model thinking..."):
             try:
                 response = client.chat.completions.create(
-                    model="llama-3.3-70b-versatile",
+                    model="llama-3.1-8b-instant",  # Updated to valid Groq open-source model ID
                     messages=[{"role": "user", "content": grounded_prompt}],
                     temperature=0.3,
                 )
